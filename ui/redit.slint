@@ -1,0 +1,26 @@
+
+import { HorizontalBox, GroupBox, TextEdit } from "std-widgets.slint";
+
+
+export component TextEditPage inherits Window {
+    title: "TextEdit";
+    in-out property <string> content;
+    in-out property <bool> wrap;
+    // description: "Similar to LineEdit, but can be used to enter several lines of text. The widget can be imported";
+    min-width: 600px;
+    min-height: 400px;
+
+    HorizontalBox {
+        // visible: false;
+        GroupBox {
+            // visible: true;
+            title: "Word-Wrap";
+            
+            te1 := TextEdit {
+                text: content;
+                horizontal-alignment: left;
+                wrap: word-wrap;
+            }
+        }
+    }
+}
