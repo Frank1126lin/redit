@@ -22,16 +22,23 @@ fn main() -> Result<(), slint::PlatformError> {
     // 根据输入的文档路径，加载文档内容，并写入到编辑器中
     let ui = AppWindow::new()?;
 
-    // ui.on_request_increase_value({
-    //     let ui_handle = ui.as_weak();
-    //     move || {
-    //         let ui = ui_handle.unwrap();
-    //         ui.set_counter(ui.get_counter() + 1);
-    //     }
-    // });
+    ui.on_request_increase_value({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            ui.set_counter(ui.get_counter() + 1);
+        }
+    });
+    ui.on_request_decrease_value({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            ui.set_counter(ui.get_counter() - 1);
+        }
+    });
 
     // let app = App::new().unwrap();
-    let text = "Hello, world!".to_string();
+    // let text = "Hello, world!".to_string();
     // app.set_text(text);
 
     ui.run()
