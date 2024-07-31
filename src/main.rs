@@ -38,9 +38,7 @@ fn main() -> Result<(), slint::PlatformError> {
 }
 
 // 读取文件内容
-
-// fn read_content(s: &str) -> Result<Vec<String>> {
-//     let mut v = Vec::new();
-//     v.push("Hello, world!".to_string());
-//     Ok(v)
+// fn read_content(s: &str) -> Result<Vec::<String>> {
+//     let v = Vec::new();
+//     Ok(v.push("Hello, world!".to_string()))
 // }
