@@ -2,6 +2,8 @@
 #![allow(unused_assignments)]
 
 use anyhow::{anyhow, Result};
+// use std::fs::File;
+use std::fs;
 // use std::path::{Path, PathBuf};
 // use std::rc::Rc;
 
@@ -21,31 +23,31 @@ fn main() -> Result<(), slint::PlatformError> {
     // logging(non_blocking);
     // 根据输入的文档路径，加载文档内容，并写入到编辑器中
     let ui = AppWindow::new()?;
+    let text: String = read_content("test.txt")
+        .unwrap()
+        .into_iter()
+        .collect::<Vec<String>>()
+        .join("\n");
 
-    ui.on_request_increase_value({
+    ui.on_show_text({
         let ui_handle = ui.as_weak();
         move || {
             let ui = ui_handle.unwrap();
-            ui.set_counter(ui.get_counter() + 1);
+            ui.set_content(text.clone().into());
         }
     });
-    ui.on_request_decrease_value({
-        let ui_handle = ui.as_weak();
-        move || {
-            let ui = ui_handle.unwrap();
-            ui.set_counter(ui.get_counter() - 1);
-        }
-    });
-
-    // let app = App::new().unwrap();
-    // let text = "Hello, world!".to_string();
-    // app.set_text(text);
 
     ui.run()
 }
 
 // 读取文件内容
-// fn read_content(s: &str) -> Result<Vec::<String>> {
-//     let v = Vec::new();
-//     Ok(v.push("Hello, world!".to_string()))
-// }
+fn read_content(s: &str) -> Result<Vec::<String>> {
+    // 打开文件并读取内容
+    // let mut file = File::open(s)?;
+    // let mut content = String::new();
+    // file.read_to_string(&mut content)?;
+    let content: String = fs::read_to_string(s)?;
+    // 按行分割内容
+    let v: Vec<String> = content.split("\n").map(|s| s.to_string()).collect();
+    Ok(v)
+}
