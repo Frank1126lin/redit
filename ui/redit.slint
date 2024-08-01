@@ -6,6 +6,7 @@ export component AppWindow inherits Window {
     title: "TextEdit";
     in-out property <string> content;
     in-out property <bool> wrap;
+    in-out property <int> page_num;
     callback show_text();
     // description: "Similar to LineEdit, but can be used to enter several lines of text. The widget can be imported";
     min-width: 600px;
@@ -22,6 +23,12 @@ export component AppWindow inherits Window {
                 text: "show text";
                 clicked => {
                     root.show_text();
+                }
+            }
+            Button {
+                text: "next page";
+                clicked => {
+                    root.page_num += 1;
                 }
             }
         }

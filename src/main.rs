@@ -24,16 +24,13 @@ fn main() -> Result<(), slint::PlatformError> {
     // 根据输入的文档路径，加载文档内容，并写入到编辑器中
     let ui = AppWindow::new()?;
     let text = read_content("/home/andy/Downloads/2024.07.18.09.27.46_log.txt").unwrap();
-
-        // .into_iter()
-        // .collect::<Vec<String>>()
-        // .join("\n");
-
+    // let mut i = 0;
     ui.on_show_text({
         let ui_handle = ui.as_weak();
         move || {
             let ui = ui_handle.unwrap();
-            let txt: String = text[0..1024].join("\n");
+            let i = ui.get_page_num() as usize;
+            let txt: String = text[i * 1024..(i + 1) * 1024].join("\n");
             ui.set_content(txt.into());
         }
     });
