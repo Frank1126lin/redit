@@ -23,17 +23,18 @@ fn main() -> Result<(), slint::PlatformError> {
     // logging(non_blocking);
     // 根据输入的文档路径，加载文档内容，并写入到编辑器中
     let ui = AppWindow::new()?;
-    let text: String = read_content("test.txt")
-        .unwrap()
-        .into_iter()
-        .collect::<Vec<String>>()
-        .join("\n");
+    let text = read_content("/home/andy/Downloads/2024.07.18.09.27.46_log.txt").unwrap();
+
+        // .into_iter()
+        // .collect::<Vec<String>>()
+        // .join("\n");
 
     ui.on_show_text({
         let ui_handle = ui.as_weak();
         move || {
             let ui = ui_handle.unwrap();
-            ui.set_content(text.clone().into());
+            let txt: String = text[0..1024].join("\n").clone();
+            ui.set_content(txt.into());
         }
     });
 
