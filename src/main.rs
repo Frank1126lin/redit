@@ -33,7 +33,7 @@ fn main() -> Result<(), slint::PlatformError> {
         let ui_handle = ui.as_weak();
         move || {
             let ui = ui_handle.unwrap();
-            let txt: String = text[0..1024].join("\n").clone();
+            let txt: String = text[0..1024].join("\n");
             ui.set_content(txt.into());
         }
     });
