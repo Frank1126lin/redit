@@ -23,20 +23,50 @@ fn main() -> Result<(), slint::PlatformError> {
     // logging(non_blocking);
     // 根据输入的文档路径，加载文档内容，并写入到编辑器中
     let ui = AppWindow::new()?;
-    let text = read_content("log.txt").unwrap();
 
     ui.on_show_text({
         let ui_handle = ui.as_weak();
         move || {
             let ui = ui_handle.unwrap();
+            // 获取页面中的文档地址
+            let uri = ui.get_path();
+            println!("uri: {}", uri.as_str());
+            // 读取文档内容
+            let text = match read_content(uri.as_str()) {
+            
+                Ok(text) => {
+                    text
+                },
+                Err(e) => {
+                    vec!["Error: Failed to read file.".to_string(), e.to_string()]
+                }
+            };
+            
             let mut i = ui.get_page_num();
             if i < 0 {
                 i = 0;
             }
             let i = i as usize;
-            println!("page_num: {}", i);
-            let txt: String = text[i * 1024..(i + 1) * 1024].join("\n");
-            ui.set_content(txt.into());
+            // println!("page_num: {}", i);
+
+            // 判断当前页是否超出文本范围
+            // 如果超出，则显示提示信息
+            // 如果没有超出，则显示当前页内容
+            let l = text.len();
+
+            let mut tx: String = "".to_string();
+
+            if l < (i*1024) {
+                tx = "End of file.".to_string();
+                // i = 0;
+                ui.set_page_num((i-1) as i32);
+            } else if l > (i+1)*1024 {
+                tx = text[i * 1024..(i + 1) * 1024].join("\n");
+            } else {
+                tx = text[i * 1024..l].join("\n");
+            }
+
+            ui.set_content(tx.into());
         }
     });
     // ui.on_prev_page({

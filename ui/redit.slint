@@ -4,6 +4,7 @@ import { Button, HorizontalBox, GroupBox, TextEdit, LineEdit } from "std-widgets
 
 export component AppWindow inherits Window {
     title: "TextEdit";
+    in-out property <string> path;
     in-out property <string> content;
     in-out property <bool> wrap;
     in-out property <int> page_num;
@@ -18,12 +19,13 @@ export component AppWindow inherits Window {
     VerticalLayout {
         // visible: false;
         HorizontalBox {
-            LineEdit {
+            Path:= LineEdit {
                 text: "Enter text here";
             }
             Button {
                 text: "show text";
                 clicked => {
+                    root.path =  Path.text;
                     root.show_text();
                 }
             }
