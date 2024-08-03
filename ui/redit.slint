@@ -1,5 +1,5 @@
 
-import { Button, HorizontalBox, GroupBox, TextEdit, LineEdit } from "std-widgets.slint";
+import { Button, HorizontalBox, GroupBox, TextEdit, LineEdit, Palette } from "std-widgets.slint";
 
 
 export component AppWindow inherits Window {
@@ -21,17 +21,24 @@ export component AppWindow inherits Window {
         HorizontalBox {
             Path:= LineEdit {
                 text: "Enter text here";
+                edited => {
+                    root.path = Path.text;
+                }
+                accepted => {
+                    root.show_text();
+                }
             }
             Button {
                 text: "show text";
                 clicked => {
-                    root.path =  Path.text;
                     root.show_text();
                 }
             }
-            Pn := LineEdit {
+            LineEdit {
                 width: 120px;
                 text: "Page_num : " + root.page_num;
+                read-only: true;
+                // enabled: false;
             }
 
             Button {
