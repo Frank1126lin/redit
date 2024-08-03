@@ -30,7 +30,7 @@ fn main() -> Result<(), slint::PlatformError> {
             let ui = ui_handle.unwrap();
             // 获取页面中的文档地址
             let uri = ui.get_path();
-            println!("uri: {}", uri.as_str());
+            // println!("uri: {}", uri.as_str());
             // 读取文档内容
             let text = match read_content(uri.as_str()) {
             
@@ -45,6 +45,7 @@ fn main() -> Result<(), slint::PlatformError> {
             let mut i = ui.get_page_num();
             if i < 0 {
                 i = 0;
+                ui.set_page_num(0);
             }
             let i = i as usize;
             // println!("page_num: {}", i);
@@ -58,8 +59,8 @@ fn main() -> Result<(), slint::PlatformError> {
 
             if l < (i*1024) {
                 tx = "End of file.".to_string();
-                // i = 0;
-                ui.set_page_num((i-1) as i32);
+                // 设置当前页为页码最大值
+                ui.set_page_num((l/1024) as i32);
             } else if l > (i+1)*1024 {
                 tx = text[i * 1024..(i + 1) * 1024].join("\n");
             } else {

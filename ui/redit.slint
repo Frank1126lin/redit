@@ -9,8 +9,8 @@ export component AppWindow inherits Window {
     in-out property <bool> wrap;
     in-out property <int> page_num;
     callback show_text();
-    callback prev_page();
-    callback next_page();
+    // callback prev_page();
+    // callback next_page();
     // description: "Similar to LineEdit, but can be used to enter several lines of text. The widget can be imported";
     min-width: 600px;
     min-height: 400px;
@@ -29,18 +29,23 @@ export component AppWindow inherits Window {
                     root.show_text();
                 }
             }
+            Pn := LineEdit {
+                width: 120px;
+                text: "Page_num : " + root.page_num;
+            }
+
             Button {
                 text: "prev page";
                 clicked => {
                     root.page_num -= 1;
-                    root.prev_page();
+                    // root.prev_page();
                 }
             }
             Button {
                 text: "next page";
                 clicked => {
                     root.page_num += 1;
-                    root.next_page();
+                    // root.next_page();
                 }
             }
         }
